@@ -1,7 +1,6 @@
 import os
 import yaml
 import datetime as dt
-import time
 import praw
 
 
@@ -125,35 +124,35 @@ def get_comments_from_post(post, limit=None):
     return comment_metadata, comment_text
 
 
-def get_comments_from_post(reddit, post_id, limit=None):
-    """
-    Get comments from a specific post.
+# def get_comments_from_post(reddit, post_id, limit=None):
+#     """
+#     Get comments from a specific post.
 
-    Parameters:
-        reddit (praw.Reddit): An instance of the Reddit API wrapper.
-        post_id (str): The ID of the post to retrieve comments from.
-        limit (int): The maximum number of comments to retrieve.
+#     Parameters:
+#         reddit (praw.Reddit): An instance of the Reddit API wrapper.
+#         post_id (str): The ID of the post to retrieve comments from.
+#         limit (int): The maximum number of comments to retrieve.
 
-        Returns:
-        list: A list of comments for the specified post.
-    """
-    post = reddit.submission(id=post_id)
-    comment_metadata = []
-    comment_text = {}
+#         Returns:
+#         list: A list of comments for the specified post.
+#     """
+#     post = reddit.submission(id=post_id)
+#     comment_metadata = []
+#     comment_text = {}
 
-    post.comments.replace_more(limit=limit)
-    for comment in post.comments.list():
-        comment_id = comment.id
-        user_name = str(comment.author)
-        num_upvotes = comment.score
-        time_created = dt.datetime.utcfromtimestamp(comment.created_utc)
-        record = {
-            'comment_id': comment_id,
-            'user_name': user_name,
-            'num_upvotes': num_upvotes,
-            'time_created': time_created
-        }
-        comment_metadata.append(record)
-        comment_text.update({comment_id: comment.body})
+#     post.comments.replace_more(limit=limit)
+#     for comment in post.comments.list():
+#         comment_id = comment.id
+#         user_name = str(comment.author)
+#         num_upvotes = comment.score
+#         time_created = dt.datetime.utcfromtimestamp(comment.created_utc)
+#         record = {
+#             'comment_id': comment_id,
+#             'user_name': user_name,
+#             'num_upvotes': num_upvotes,
+#             'time_created': time_created
+#         }
+#         comment_metadata.append(record)
+#         comment_text.update({comment_id: comment.body})
 
-    return comment_metadata, comment_text
+#     return comment_metadata, comment_text

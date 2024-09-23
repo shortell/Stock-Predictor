@@ -11,7 +11,7 @@ def add_company(ticker, company_name):
     - bool: True if the company was successfully added, False otherwise.
     """
     query = """
-    INSERT INTO rss.companies (ticker, name)
+    INSERT INTO psi.companies (ticker, name)
     VALUES (%s, %s);
     """
     try:
@@ -25,8 +25,9 @@ def add_company(ticker, company_name):
 def bulk_add_companies(companies: set):
     values = [(company,) for company in companies]
     query = """
-    INSERT INTO rss.companies (ticker)
-    VALUES (%s);
+    INSERT INTO psi.companies (ticker)
+    VALUES (%s)
+    ON CONFLICT (ticker) DO NOTHING;
     """
     try:
         with connect() as conn:
@@ -48,7 +49,7 @@ def update_company_name(ticker, company_name):
     - bool: True if the company name was successfully updated, False otherwise.
     """
     query = """
-    UPDATE rss.companies
+    UPDATE psi.companies
     SET name = %s
     WHERE ticker = %s;
     """
@@ -69,7 +70,7 @@ def delete_company(ticker):
     - bool: True if the company was successfully deleted, False otherwise.
     """
     query = """
-    DELETE FROM rss.companies
+    DELETE FROM psi.companies
     WHERE ticker = %s;
     """
     try:

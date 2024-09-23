@@ -17,7 +17,7 @@ def drop_schema():
     Drops the schema for the database.
     """
     try:
-        exec_commit('DROP SCHEMA IF EXISTS rsi CASCADE;')
+        exec_commit('DROP SCHEMA IF EXISTS psi CASCADE;')
         return True
     except Exception as e:
         print(f"Error dropping schema: {e}")

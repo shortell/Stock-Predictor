@@ -11,10 +11,12 @@ def add_comments_bulk(comments, post_id):
     - bool: True if all comments were successfully added, False otherwise.
     """
     query = """
-    INSERT INTO rsi.comments (comment_id, post_id, user_id, num_upvotes, time_created)
-    VALUES (%s, %s, %s, %s, %s);
+    INSERT INTO psi.comments (id, post_id, redditor, num_upvotes, time_created)
+    VALUES (%s, %s, %s, %s, %s)
+    ON CONFLICT (id) DO UPDATE SET
+      num_upvotes = EXCLUDED.num_upvotes;
     """
-    values = [(comment['comment_id'], post_id, comment['user_id'],
+    values = [(comment['comment_id'], post_id, comment['user_name'],
                comment['num_upvotes'], comment['time_created']) for comment in comments]
     try:
         with connect() as conn:
@@ -36,7 +38,7 @@ def get_comments_by_post(post_id):
     - list: A list of dictionaries representing the comments.
     """
     query = """
-    SELECT comment_id, user_id, num_upvotes, time_created FROM rsi.comments
+    SELECT comment_id, user_id, num_upvotes, time_created FROM psi.comments
     WHERE post_id = %s;
     """
     try:

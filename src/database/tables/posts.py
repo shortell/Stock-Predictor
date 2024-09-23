@@ -14,7 +14,7 @@ def add_posts_bulk(posts, subreddit_id):
   """
 
   query = """
-  INSERT INTO rsi.posts (id, subreddit_id, redditor, num_upvotes, upvote_ratio, time_created)
+  INSERT INTO psi.posts (id, subreddit_id, redditor, num_upvotes, upvote_ratio, time_created)
   VALUES (%s, %s, %s, %s, %s, %s)
   ON CONFLICT (id) DO UPDATE SET
       num_upvotes = EXCLUDED.num_upvotes,
@@ -46,7 +46,7 @@ def get_posts_by_subreddit_in_last_n_days(subreddit_id, n_days):
     - list: A list of dictionaries representing the posts.
     """
     query = """
-    SELECT id, redditor, num_upvotes, upvote_ratio, time_created FROM rsi.posts
+    SELECT id, redditor, num_upvotes, upvote_ratio, time_created FROM psi.posts
     WHERE subreddit_id = %s
     AND time_created >= NOW() - INTERVAL '%s days';
     """

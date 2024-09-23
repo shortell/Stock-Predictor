@@ -15,7 +15,7 @@ def add_redditors_bulk(content_metadata):
     user_names = [(record['user_name'],) for record in content_metadata]
 
     query = """
-  INSERT INTO rsi.redditors (user_name)
+  INSERT INTO psi.redditors (user_name)
   VALUES (%s)
   ON CONFLICT (user_name) DO NOTHING;
   """
