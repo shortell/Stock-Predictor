@@ -6,7 +6,7 @@ def create_schema():
     Creates the schema for the database.
     """
     try:
-        exec_sql_file('queries/schema.sql')
+        exec_sql_file('sql/schema.sql')
         return True
     except Exception as e:
         print(f"Error creating schema: {e}")
@@ -17,7 +17,7 @@ def drop_schema():
     Drops the schema for the database.
     """
     try:
-        exec_commit('DROP SCHEMA IF EXISTS psi CASCADE;')
+        exec_commit('DROP SCHEMA IF EXISTS rsst CASCADE;')
         return True
     except Exception as e:
         print(f"Error dropping schema: {e}")

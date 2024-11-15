@@ -10,7 +10,7 @@ def add_subreddit(id, name, is_active=False):
     - bool: True if the subreddit was successfully added, False otherwise.
     """
     query = """
-    INSERT INTO psi.subreddits (id, name, is_active)
+    INSERT INTO rsst.subreddits (id, name, is_active)
     VALUES (%s, %s, %s);
     """
     try:

@@ -11,7 +11,7 @@ def add_comments_bulk(comments, post_id):
     - bool: True if all comments were successfully added, False otherwise.
     """
     query = """
-    INSERT INTO psi.comments (id, post_id, redditor, num_upvotes, time_created)
+    INSERT INTO rsst.comments (id, post_id, redditor, num_upvotes, time_created)
     VALUES (%s, %s, %s, %s, %s)
     ON CONFLICT (id) DO UPDATE SET
       num_upvotes = EXCLUDED.num_upvotes;
@@ -38,7 +38,7 @@ def get_comments_by_post(post_id):
     - list: A list of dictionaries representing the comments.
     """
     query = """
-    SELECT comment_id, user_id, num_upvotes, time_created FROM psi.comments
+    SELECT comment_id, user_id, num_upvotes, time_created FROM rsst.comments
     WHERE post_id = %s;
     """
     try:

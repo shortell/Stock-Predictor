@@ -1,3 +1,7 @@
 praw
 google-generativeai
 yfinance
+yahoo-fin
+openai
+torch
+numpy

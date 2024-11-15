@@ -1,4 +1,4 @@
-from ..postgres_utils import exec_commit, exec_get_one, connect
+from ..postgres_utils import exec_commit, exec_get_all, exec_get_one, connect
 
 
 def add_company(ticker, company_name):
@@ -11,7 +11,7 @@ def add_company(ticker, company_name):
     - bool: True if the company was successfully added, False otherwise.
     """
     query = """
-    INSERT INTO psi.companies (ticker, name)
+    INSERT INTO rsst.companies (ticker, name)
     VALUES (%s, %s);
     """
     try:
@@ -25,9 +25,9 @@ def add_company(ticker, company_name):
 def bulk_add_companies(companies: set):
     values = [(company,) for company in companies]
     query = """
-    INSERT INTO psi.companies (ticker)
+    INSERT INTO rsst.companies (ticker)
     VALUES (%s)
-    ON CONFLICT (ticker) DO NOTHING;
+    ON CONFLICT (ticker) DO UPDATE SET ticker = EXCLUDED.ticker;
     """
     try:
         with connect() as conn:
@@ -49,7 +49,7 @@ def update_company_name(ticker, company_name):
     - bool: True if the company name was successfully updated, False otherwise.
     """
     query = """
-    UPDATE psi.companies
+    UPDATE rsst.companies
     SET name = %s
     WHERE ticker = %s;
     """
@@ -70,7 +70,7 @@ def delete_company(ticker):
     - bool: True if the company was successfully deleted, False otherwise.
     """
     query = """
-    DELETE FROM psi.companies
+    DELETE FROM rsst.companies
     WHERE ticker = %s;
     """
     try:
@@ -98,4 +98,21 @@ def get_company(id):
         return result
     except Exception as e:
         print(f"Error retrieving company from database: {e}")
+        return None
+    
+def get_companies():
+    """
+    Retrieves all companies from the database.
+    Returns:  
+    - list: A list of tuples representing the companies.
+    """
+
+    query = """
+    SELECT ticker FROM rsst.companies;
+    """
+    try:
+        result = exec_get_all(query)
+        return result
+    except Exception as e:
+        print(f"Error retrieving companies from database: {e}")
         return None
