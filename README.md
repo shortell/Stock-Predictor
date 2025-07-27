@@ -18,10 +18,6 @@ Stock-Predictor is a machine learning model that forecasts stock prices using **
 ![1-Day Prediction](assets/1-day-predictions.png)  
 This visualization shows the model’s **short-term accuracy** by predicting the next day's stock price based on the previous 30 days of data. The blue line represents actual prices, while the orange line represents predicted prices.  
 
-### **Recursive Predictions**  
-![Recursive Predictions](assets/recursive-day-predictions.png)  
-Here, the model **predicts multiple future days recursively** by feeding its own predictions back as inputs. While this method allows for extended forecasting, errors may compound over time.  
-
 ## Technologies Used  
 - **Python** (Data Processing & Model Training)  
 - **PyTorch** (LSTM Model Implementation)  
